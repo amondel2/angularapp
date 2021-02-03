@@ -8,6 +8,7 @@ import {HttpClient} from "@angular/common/http";
 export class NavService {
 
   _navData: Observable<any>;
+  _listData: Observable<any>;
 
   constructor(private httpClient: HttpClient) { }
 
@@ -17,5 +18,13 @@ export class NavService {
         .pipe(publishReplay(), refCount());
     }
     return this._navData;
+  }
+
+  getListData(): Observable<any> {
+   if (!this._listData) {
+        this._listData = this.httpClient.get(environment.serverUrl + 'test')
+          .pipe(publishReplay(), refCount());
+      }
+    return this._listData;
   }
 }
